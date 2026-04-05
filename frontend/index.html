@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Demo</title>
+</head>
+<body>
+    <h1>Wound Monitoring System</h1>
+    <button onclick="callAPI()">Test API</button>
+    <p id="output"></p>
+
+    <button onclick="testBackend()">Test Backend</button>
+    <p id="backend-output"></p>
+
+    <script>
+        async function callAPI() {
+            const res = await fetch("http://127.0.0.1:8000/predict");
+            const data = await res.json();
+            document.getElementById("output").innerText = data.result;
+        }
+
+        async function testBackend() {
+            const res = await fetch("http://127.0.0.1:8000/");
+            const data = await res.json();
+            document.getElementById("backend-output").innerText = data.message;
+        }
+    </script>
+</body>
+</html>
