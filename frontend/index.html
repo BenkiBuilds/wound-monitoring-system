@@ -7,47 +7,21 @@
 </head>
 <body>
     <h1>Wound Monitoring System</h1>
-    <button onclick="callAPI()">Test API</button>
-    <p id="output"></p>
 
-    <button onclick="testBackend()">Test Backend</button>
-    <p id="backend-output"></p>
+    <h3>Upload wound image for analysis</h3>
 
-    <input type="file" id="imageInput" accept="image/*">
-    <img id="preview" style="max-width: 300px; display: none;">
+    <input type="file" id="image-input" onchange="previewImage()">
+    <br><br>
 
-    
+    <img id="preview" width="200">
+    <br><br>
 
-    <script>
-        async function callAPI() {
-            const res = await fetch("http://127.0.0.1:8000/predict");
-            const data = await res.json();
-            document.getElementById("output").innerText = data.result;
-        }
+    <button onclick="displayConfidence()">Analyze Wound</button>
 
-        async function testBackend() {
-            const res = await fetch("http://127.0.0.1:8000/");
-            const data = await res.json();
-            document.getElementById("backend-output").innerText = data.message;
-        }
+    <p id="result"></p>
+    <p id="healing-score"></p>
+    <p id="advice"></p>
 
-        const input = document.getElementById('imageInput');
-        const preview = document.getElementById('preview');
-
-        input.addEventListener('change', (event) => {
-        const [file] = event.target.files;
-        if (file) {
-            // Create a temporary URL for the file
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = 'block';
-
-            // Optional: Free memory after the image loads
-            preview.onload = () => URL.revokeObjectURL(preview.src);
-        }
-        });
-
-        
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
