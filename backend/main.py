@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 app=FastAPI()
 
@@ -16,3 +16,10 @@ def home():
 @app.get("/predict")
 def predict():
     return{"result":"dummy output"}
+
+@app.post("/upload-image")
+async def upload_image(file:UploadFile = File(...)):
+    filename = file.filename
+    content_type = file.content_type
+    contents = await file.read()
+    return {"filename": filename, "type": content_type}
